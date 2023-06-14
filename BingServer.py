@@ -51,7 +51,8 @@ def getChatBot(token: str) -> tuple:
         else:
             return token, None
     else:
-        cookies = json.loads(open(COOKIE_FILE_PATH, encoding="utf-8").read())
+        # cookies = json.loads(open(COOKIE_FILE_PATH, encoding="utf-8").read())
+        cookies = os.environ.get('COOKIES')
         chatBot = EdgeGPT.Chatbot(proxy=PROXY, cookies=cookies)
         token = str(uuid.uuid4())
         CHATBOT[token] = {}
@@ -180,7 +181,8 @@ def error500(request: Request, exc: Exception) -> Response:
 @APP.websocket('/ws')
 async def ws(ws: WebSocket) -> str:
     await ws.accept()
-    cookies = json.loads(open(COOKIE_FILE_PATH, encoding="utf-8").read())
+    # cookies = json.loads(open(COOKIE_FILE_PATH, encoding="utf-8").read())
+    cookies = os.environ.get('COOKIES')
     chatBot = EdgeGPT.Chatbot(proxy=PROXY, cookies=cookies)
     while True:
         try:
@@ -265,7 +267,8 @@ _ _ The ass-istant is t-empora-ril-y unavail-abl-e _ due _ _ to a-n error. The a
 @APP.websocket('/ws_stream')
 async def wsStream(ws: WebSocket) -> str:
     await ws.accept()
-    cookies = json.loads(open(COOKIE_FILE_PATH, encoding="utf-8").read())
+    # cookies = json.loads(open(COOKIE_FILE_PATH, encoding="utf-8").read())
+    cookies = os.environ.get('COOKIES')
     chatBot = EdgeGPT.Chatbot(proxy=PROXY, cookies=cookies)
     while True:
         try:
@@ -384,7 +387,8 @@ async def image(request: Request) -> Response:
         return GenerateResponse().error(110, '仅支持英文')
     
     with open(COOKIE_FILE_PATH, encoding='utf-8') as file:
-        cookies = json.load(file)
+        # cookies = json.load(file)
+        cookies = os.environ.get('COOKIES')
         for cookie in cookies:
             if cookie.get('name') == '_U':
                 uCookie = cookie.get('value')
