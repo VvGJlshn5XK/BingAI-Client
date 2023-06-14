@@ -1,4 +1,4 @@
-name: Build and push `gpt4free` docker image
+name: Build and push `BingAI-Client` docker image
 
 on:
   workflow_dispatch:
