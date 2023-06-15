@@ -1,7 +1,7 @@
 FROM python:alpine3.18
 
 WORKDIR /bing
-COPY requirements.txt requirements.txt
+COPY . .
 
 RUN pip3 install --no-cache-dir -r requirements.txt
 
